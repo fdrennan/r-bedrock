@@ -1,5 +1,6 @@
 #' @export
 installation <- function() {
+  browser()
   box::use(s = shiny[withTags, t = tags], bs4Dash[ui_box = box])
   ui_box(
     title = t$h3("Installation Steps"), 
@@ -29,6 +30,7 @@ installation <- function() {
 
 #' @export
 documentation <- function() {
+  browser()
   box::use(s = shiny[withTags, t = tags], bs4Dash[ui_box = box])
   ui_box(
     title = t$h3("Documentation"), collapsed = TRUE,
@@ -39,5 +41,18 @@ documentation <- function() {
         )
       )
     ))
+  )
+}
+
+
+
+#' @export
+#' @export
+random_thoughts <- function() {
+  browser()
+  box::use(s = shiny[withTags, t = tags], b=bs4Dash)
+  b$box(
+    title = t$h3("Sources"), 
+    t$a('The Economist', href='https://economist.com')
   )
 }
