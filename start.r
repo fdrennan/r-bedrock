@@ -1,34 +1,57 @@
 
 ui <- function(input) {
-  box::use(s = shiny, b = bs4Dash, box/ui)
+  box::use(s = shiny, b = bs4Dash, box / ui)
   b$dashboardPage(
-    b$dashboardHeader(title = b$dashboardBrand(
-      title = "just my thoughts"
-      # color = "primary"
-      # href = "https://adminlte.io/themes/v3",
-      # image = "https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png"
-    )),
+    b$dashboardHeader(
+      compact = TRUE
+    ),
     b$dashboardSidebar(disable = TRUE),
     b$dashboardBody(
       s$fluidRow(
-        s$includeCSS("www/styles.css"),
         ui$installation(),
         ui$documentation(),
-        ui$random_thoughts()
+        ui$random_thoughts(),
+        b$box(
+          title = "Closable Box with dropdown",
+          closable = TRUE,
+          width = 12,
+          status = "warning",
+          solidHeader = FALSE,
+          collapsible = TRUE,
+          label = b$boxLabel(
+            text = 1,
+            status = "danger"
+          ),
+          dropdownMenu = b$boxDropdown(
+            b$boxDropdownItem("Link to google", href = "https://www.google.com"),
+            b$boxDropdownItem("item 2", href = "#"),
+            b$dropdownDivider(),
+            b$boxDropdownItem("item 3", href = "#", icon = icon("th"))
+          ),
+          sidebar = b$boxSidebar(
+            startOpen = TRUE,
+            id = "mycardsidebar",
+            s$sliderInput(
+              "obs",
+              "Number of observations:",
+              min = 0,
+              max = 1000,
+              value = 500
+            )
+          ),
+          s$plotOutput("distPlot")
+        )
       )
     )
   )
 }
 
 server <- function(input, output, session) {
-
-}
-
-callShiny <- function(ui, server) {
-  box::use(shiny[shinyApp])
-  shinyApp(ui, server)
+  output$distPlot <- renderPlot({
+    hist(rnorm(input$obs))
+  })
 }
 
 
-callShiny(ui, server)
-
+box::use(shiny[shinyApp])
+shinyApp(ui, server)

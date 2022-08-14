@@ -1,26 +1,40 @@
 #' @export
 installation <- function() {
-  browser()
   box::use(s = shiny[withTags, t = tags], bs4Dash[ui_box = box])
   ui_box(
-    title = t$h3("Installation Steps"), 
+    title = t$h3("Installation Steps"),
     withTags(
       div(
         ul(
           li(
-            a("Install R", href = "https://cran.r-project.org/mirrors.html)")
+            a(
+              "Install R",
+              href = "https://cran.r-project.org/mirrors.html)"
+            )
           ),
           li(
-            a("Install RStudio", href = "https://www.rstudio.com/products/rstudio/download/")
+            a(
+              "Install RStudio",
+              href = "https://www.rstudio.com/products/rstudio/download/"
+            )
           ),
           li(
-            a("Windows Only Install RTools", href = "https://cran.r-project.org/bin/windows/Rtools/")
+            a(
+              "Windows Only Install RTools",
+              href = "https://cran.r-project.org/bin/windows/Rtools/"
+            )
           ),
           li(
-            a("Install Node and NPM", href = "https://phoenixnap.com/kb/install-node-js-npm-on-windows")
+            a(
+              "Install Node and NPM",
+              href = "https://phoenixnap.com/kb/install-node-js-npm-on-windows"
+            )
           ),
           li(
-            a("Install Dart Sass", href = "https://sass-lang.com/install")
+            a(
+              "Install Dart Sass",
+              href = "https://sass-lang.com/install"
+            )
           )
         )
       )
@@ -30,10 +44,9 @@ installation <- function() {
 
 #' @export
 documentation <- function() {
-  browser()
   box::use(s = shiny[withTags, t = tags], bs4Dash[ui_box = box])
   ui_box(
-    title = t$h3("Documentation"), collapsed = TRUE,
+    title = t$h3("Documentation"),
     withTags(div(
       ul(
         li(
@@ -49,10 +62,9 @@ documentation <- function() {
 #' @export
 #' @export
 random_thoughts <- function() {
-  browser()
-  box::use(s = shiny[withTags, t = tags], b=bs4Dash)
+  box::use(s = shiny[withTags, t = tags], b = bs4Dash)
   b$box(
-    title = t$h3("Sources"), 
-    t$a('The Economist', href='https://economist.com')
+    title = t$h3("Sources"),
+    t$a("The Economist", href = "https://economist.com")
   )
 }
