@@ -1,17 +1,14 @@
-library(shiny)
 
 ui <- function(input) {
-  fluidPage(
-    includeCSS("www/styles.css"),
-    withTags(
-      div(
-        h1("This serves as a template for building applications in R."),
-        h1("To get started, install the following."),
-        a("Install R", href = "https://cran.r-project.org/mirrors.html)"),
-        a("Install RStudio", href = "https://www.rstudio.com/products/rstudio/download/"),
-        a("Windows Only Install RTools", href = "https://cran.r-project.org/bin/windows/Rtools/"),
-        a("Install Node and NPM", href = "https://phoenixnap.com/kb/install-node-js-npm-on-windows"),
-        code("npm install --global yarn")
+  box::use(s = shiny, b = bs4Dash, box / ui[installation, documentation])
+  b$dashboardPage(
+    b$dashboardHeader(disable = TRUE),
+    b$dashboardSidebar(disable = TRUE),
+    b$dashboardBody(
+      s$fluidRow(
+        s$includeCSS("www/styles.css"),
+        installation(),
+        documentation()
       )
     )
   )
@@ -21,4 +18,10 @@ server <- function(input, output, session) {
 
 }
 
-shinyApp(ui, server)
+callShiny <- function(ui, server) {
+  box::use(shiny[shinyApp])
+  shinyApp(ui, server)
+}
+
+
+callShiny(ui, server)

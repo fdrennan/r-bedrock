@@ -1,0 +1,14 @@
+version: "3"
+services:
+  app:
+    container_name: test-app
+    build: .
+    restart: always
+    user: 'root'
+    ports:
+    - '5000:5000'
+    expose:
+    - '5000'
+    command: ["R", "-e", "shiny::runApp('/app/app.R', port = 5000, launch.browser=FALSE, host='0.0.0.0')"]
+    network_mode: bridge
+
