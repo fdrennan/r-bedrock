@@ -6,39 +6,47 @@ ui <- function(id = "documentation") {
   ns <- s$NS(id)
   mod$box(
     title = t$h3("Documentation"),
-    s$withTags(div(
-      ul(
-        li(
-          a("bs4Dash", href = "https://rinterface.github.io/bs4Dash/index.html")
-        )
-      )
-    )),
+    s$uiOutput(ns("file")),
     sidebar = b$boxSidebar(
-      s$uiOutput(ns('directories')),
-      s$uiOutput(ns('files'))
+      id = ns("sidebar"),
+      s$uiOutput(ns("directories")),
+      s$uiOutput(ns("files")),
+      b$actionButton(ns("runStyle"), label = "Style Current File")
     )
   )
 }
 
 #' @export
 server <- function(id = "documentation") {
-  box::use(s=shiny)
+  box::use(s = shiny)
   s$moduleServer(
     id,
     function(input, output, session) {
-      box::use(fs)
+      box::use(fs, r = readr, h = highlight, styler)
       ns <- session$ns
+
       output$directories <- s$renderUI({
-        directories <- fs$dir_ls('box', recurse = TRUE, type = 'directory')
-        s$selectizeInput(ns('boxDirectory'), 'Directory', choices=directories)
+        directories <- fs$dir_ls("box", recurse = TRUE, type = "directory")
+        directories <- c(getwd(), directories)
+        s$selectizeInput(ns("boxDirectory"), "Directory", choices = directories)
       })
-      
+
       output$files <- s$renderUI({
         s$req(input$boxDirectory)
-        files <- fs$dir_ls(input$boxDirectory, recurse = TRUE)
-        s$selectizeInput(ns('dirFiles'), 'Files', choices=files)
+
+        files <- fs$dir_ls(input$boxDirectory, recurse = TRUE, type='file')
+        s$selectizeInput(ns("dirFiles"), "Files", choices = files)
       })
-      
+
+      s$observeEvent(input$runStyle, {
+        styler$style_file(input$dirFiles)
+        s$showNotification("Styling Complete")
+      })
+
+      output$file <- s$renderUI({
+        s$req(input$dirFiles)
+        s$HTML(h$highlight(input$dirFiles, renderer = h$renderer_html()))
+      })
     }
   )
 }
