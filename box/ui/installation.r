@@ -1,7 +1,9 @@
 #' @export
-installation <- function() {
-  box::use(s = shiny[withTags, t = tags], bs4Dash[ui_box = box])
-  ui_box(
+ui <- function(id = "installation") {
+  box::use(s = shiny[withTags, NS, t = tags], bs4Dash[ui_box = box])
+  box::use(mod = .. / bs4Mod / box)
+  ns <- NS(id)
+  mod$box(
     title = t$h3("Installation Steps"),
     withTags(
       div(
@@ -39,32 +41,5 @@ installation <- function() {
         )
       )
     )
-  )
-}
-
-#' @export
-documentation <- function() {
-  box::use(s = shiny[withTags, t = tags], bs4Dash[ui_box = box])
-  ui_box(
-    title = t$h3("Documentation"),
-    withTags(div(
-      ul(
-        li(
-          a("bs4Dash", href = "https://rinterface.github.io/bs4Dash/index.html")
-        )
-      )
-    ))
-  )
-}
-
-
-
-#' @export
-#' @export
-random_thoughts <- function() {
-  box::use(s = shiny[withTags, t = tags], b = bs4Dash)
-  b$box(
-    title = t$h3("Sources"),
-    t$a("The Economist", href = "https://economist.com")
   )
 }
