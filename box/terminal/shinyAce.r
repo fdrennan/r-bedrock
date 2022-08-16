@@ -73,10 +73,14 @@ server <- function(id = "shinyAce") {
 
       output$aceOutput <- s$renderUI({
         input$submit
+        browser()
         s$isolate(input$ace)
-        sys$exec_wait(cmd = input$ace, std_out = "out.txt")
+        s$isolate(input$ace_shinyAce_annotationTrigger)
+        s$isolate(input$`ace_shinyAce-selection`)
+        tmp <- tempfile()
+        sys$exec_wait(cmd = input$ace, std_out = tmp)
         s$tags$pre(
-          r$read_file("out.txt")
+          r$read_file(tmp)
         )
       })
     }
