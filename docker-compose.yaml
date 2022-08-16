@@ -10,6 +10,7 @@ services:
     expose:
     - '5323'
     volumes:
+    - './box:/app/box'
     - './start_api.r:/app/start_api.r'
     - './plumber.r:/app/plumber.r'
     - './start.r:/app/start.r'

@@ -22,3 +22,6 @@ WORKDIR /app/
 
 COPY renv.lock .
 RUN R -e "renv::restore()"
+
+RUN apt install -y npm 
+RUN npm install -g sass
