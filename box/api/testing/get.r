@@ -1,6 +1,8 @@
 #* Echo back the input
 #* @param msg The message to echo
 #* @export
-echo <- function(msg="") {
-  list(msg = paste0("The message is: '", msg, "'"))
+sessionInfo <- function(msg="") {
+  box::use(u=utils,jsonlite[toJSON,unbox])
+  session_info <- u$sessionInfo()
+  unbox(toJSON(session_info$R.version))
 }
