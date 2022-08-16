@@ -34,7 +34,13 @@ server <- function(id = "documentation") {
       output$files <- s$renderUI({
         s$req(input$boxDirectory)
 
-        files <- fs$dir_ls(input$boxDirectory, recurse = TRUE, type='file')
+        files <- fs$dir_ls(input$boxDirectory,
+          recurse = FALSE,
+          type = "file",
+          regexp = "node_modules",
+          invert = TRUE
+        )
+
         s$selectizeInput(ns("dirFiles"), "Files", choices = files)
       })
 
@@ -45,7 +51,15 @@ server <- function(id = "documentation") {
 
       output$file <- s$renderUI({
         s$req(input$dirFiles)
-        s$HTML(h$highlight(input$dirFiles, renderer = h$renderer_html()))
+        if (fs$path_ext(input$dirFiles) == "r") {
+          out <- s$HTML(h$highlight(input$dirFiles, renderer = h$renderer_html()))
+        } else {
+          file <- r$read_file(input$dirFiles)
+          out <- s$tags$pre(
+            paste0("\n", file)
+          )
+        }
+        out
       })
     }
   )

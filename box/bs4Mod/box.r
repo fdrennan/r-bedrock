@@ -2,7 +2,7 @@
 box <- function(...) {
   box::use(b = bs4Dash, s = shiny)
   b$box(
-    width = 12, maximizable = TRUE, collapsible = TRUE,
+    maximizable = TRUE, collapsible = TRUE, closable = TRUE,
     ...
   )
 }

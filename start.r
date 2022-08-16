@@ -4,7 +4,6 @@ ui <- function(input) {
     s = shiny,
     b = bs4Dash,
     box / ui / documentation,
-    box / ui / sources,
     box / ui / installation,
   )
 
@@ -15,12 +14,8 @@ ui <- function(input) {
     b$dashboardSidebar(disable = TRUE),
     b$dashboardBody(
       s$fluidRow(
-        class = "d-flex flex-column",
-        b$sortable(
-          installation$ui(),
-          documentation$ui(),
-          sources$ui()
-        )
+        installation$ui(),
+        documentation$ui(),
       )
     )
   )
@@ -30,9 +25,8 @@ server <- function(input, output, session) {
   box::use(
     box / ui / documentation
   )
-  
+
   documentation$server()
-  
 }
 
 
