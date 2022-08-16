@@ -7,21 +7,23 @@ RUN apt install -y software-properties-common dirmngr libcurl4-openssl-dev \
     libcurl4-openssl-dev libxml2-dev libpq-dev cmake \
     r-base r-base-dev libsodium-dev libsasl2-dev
 
+RUN apt install -y npm 
+RUN npm install -g sass
+
+
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
 RUN ./aws/install
 
 RUN R -e "install.packages(c('renv'))"
 
-# RUN R -e "install.packages('reticulate')"
-# RUN R -e "reticulate::install_miniconda()"
-# ENV LC_ALL C.UTF-8
-# ENV LANG C.UTF-8
+RUN R -e "install.packages('reticulate')"
+RUN R -e "reticulate::install_miniconda()"
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
 
 WORKDIR /app/
 
 COPY renv.lock .
 RUN R -e "renv::restore()"
 
-RUN apt install -y npm 
-RUN npm install -g sass

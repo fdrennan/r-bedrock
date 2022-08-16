@@ -14,5 +14,6 @@ services:
     - './start_api.r:/app/start_api.r'
     - './plumber.r:/app/plumber.r'
     - './start.r:/app/start.r'
+    - './www:/app/www'
     command: ["R", "-e", "shiny::runApp('/app/start.r', port = 5323, launch.browser=FALSE, host='0.0.0.0')"]
 

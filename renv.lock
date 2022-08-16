@@ -747,6 +747,17 @@
         "xtable"
       ]
     },
+    "shinyAce": {
+      "Package": "shinyAce",
+      "Version": "0.4.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "99b2ee37c4f174539b1b0d920b00d16c",
+      "Requirements": [
+        "jsonlite",
+        "shiny"
+      ]
+    },
     "sodium": {
       "Package": "sodium",
       "Version": "1.2.1",
