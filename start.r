@@ -5,6 +5,7 @@ ui <- function(input) {
     b = bs4Dash,
     box / ui / documentation,
     box / ui / installation,
+    box / terminal / shinyAce
   )
 
   b$dashboardPage(
@@ -16,6 +17,7 @@ ui <- function(input) {
       s$fluidRow(
         installation$ui(),
         documentation$ui(),
+        shinyAce$ui()
       )
     )
   )
@@ -23,10 +25,12 @@ ui <- function(input) {
 
 server <- function(input, output, session) {
   box::use(
-    box / ui / documentation
+    box / ui / documentation,
+    box / terminal / shinyAce
   )
 
   documentation$server()
+  shinyAce$server()
 }
 
 

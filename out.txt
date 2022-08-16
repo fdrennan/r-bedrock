@@ -1,0 +1,27 @@
+total 87K
+drwxr-xr-x 1 Redbock None    0 Aug 16 16:13 .
+drwxr-xr-x 1 Redbock None    0 Aug 13 16:00 ..
+-rw-r--r-- 1 Redbock None 2.7K Aug 16 10:20 .Rhistory
+-rw-r--r-- 1 Redbock None   70 Aug 16 00:29 .Rprofile
+drwxr-xr-x 1 Redbock None    0 Aug 13 16:01 .Rproj.user
+drwxr-xr-x 1 Redbock None    0 Aug 16 16:13 .git
+-rw-r--r-- 1 Redbock None  607 Aug 13 23:15 .gitignore
+-rw-r--r-- 1 Redbock None  729 Aug 16 15:22 Dockerfile
+-rw-r--r-- 1 Redbock None 1.1K Aug 13 23:19 LICENSE
+-rw-r--r-- 1 Redbock None  129 Aug 13 23:14 Makefile
+-rw-r--r-- 1 Redbock None  465 Aug 13 23:28 README.Rmd
+-rw-r--r-- 1 Redbock None  339 Aug 13 23:28 README.md
+drwxr-xr-x 1 Redbock None    0 Aug 13 23:26 README_files
+drwxr-xr-x 1 Redbock None    0 Aug 16 15:29 box
+-rw-r--r-- 1 Redbock None  437 Aug 16 15:09 docker-compose.yaml
+drwxr-xr-x 1 Redbock None    0 Aug 13 23:14 node_modules
+-rw-r--r-- 1 Redbock None    0 Aug 16 16:13 out.txt
+-rw-r--r-- 1 Redbock None  866 Aug 13 23:14 package-lock.json
+-rw-r--r-- 1 Redbock None  290 Aug 13 23:14 package.json
+-rw-r--r-- 1 Redbock None   98 Aug 16 00:27 plumber.r
+-rw-r--r-- 1 Redbock None  241 Aug 16 16:13 r-bedrock.Rproj
+drwxr-xr-x 1 Redbock None    0 Aug 13 23:14 renv
+-rw-r--r-- 1 Redbock None  24K Aug 16 00:34 renv.lock
+-rw-r--r-- 1 Redbock None  666 Aug 16 15:48 start.r
+-rw-r--r-- 1 Redbock None   72 Aug 15 23:37 start_api.r
+drwxr-xr-x 1 Redbock None    0 Aug 13 23:14 www
