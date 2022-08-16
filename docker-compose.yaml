@@ -1,14 +1,17 @@
 version: "3"
 services:
   app:
-    container_name: test-app
+    container_name: r-bedrock-app
     build: .
     restart: always
     user: 'root'
     ports:
-    - '5000:5000'
+    - '5323:5323'
     expose:
-    - '5000'
-    command: ["R", "-e", "shiny::runApp('/app/app.R', port = 5000, launch.browser=FALSE, host='0.0.0.0')"]
-    network_mode: bridge
+    - '5323'
+    volumes:
+    - './start_api.r:/app/start_api.r'
+    - './plumber.r:/app/plumber.r'
+    - './start.r:/app/start.r'
+    command: ["R", "-e", "shiny::runApp('/app/start.r', port = 5323, launch.browser=FALSE, host='0.0.0.0')"]
 
