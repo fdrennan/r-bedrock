@@ -1,23 +1,33 @@
 
 ui <- function(input) {
   box::use(
-    s = shiny,
-    b = bs4Dash,
+     shiny,
+    bs4Dash,
     box / ui / documentation,
     box / ui / installation,
     box / terminal / shinyAce
   )
 
-  b$dashboardPage(
-    b$dashboardHeader(
-      compact = TRUE
+  bs4Dash$dashboardPage(fullscreen = TRUE, dark = TRUE, title = 'r-bedrock',
+    header=bs4Dash$dashboardHeader(border = TRUE,
+      compact =FALSE
     ),
-    b$dashboardSidebar(disable = TRUE),
-    b$dashboardBody(
-      s$fluidRow(
-        # installation$ui(),
-        # documentation$ui(),
-        shinyAce$ui()
+    sidebar = bs4Dash$dashboardSidebar(width = '500px',
+      documentation$ui()
+    ),
+    controlbar = bs4Dash$dashboardControlbar(
+      collapsed = TRUE,
+      div(class = "p-3", bs4Dash$skinSelector()),
+      pinned = TRUE
+    ),
+    bs4Dash$dashboardBody(
+      shiny$fluidRow(
+        # column(4,
+        #   
+        # ),
+        column(
+          12, shinyAce$ui()
+        )
       )
     )
   )
@@ -28,7 +38,6 @@ server <- function(input, output, session) {
     box / ui / documentation,
     box / terminal / shinyAce
   )
-
   documentation$server()
   shinyAce$server()
 }

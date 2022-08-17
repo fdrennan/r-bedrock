@@ -1,10 +1,9 @@
 #' @export
 ui <- function(id = "documentation") {
-  box::use(mod = .. / bs4Mod / box)
   box::use(fs)
   box::use(s = shiny[t = tags], b = bs4Dash)
   ns <- s$NS(id)
-  mod$box(
+  b$box(width=12,
     title = t$h3("Documentation"),
     s$uiOutput(ns("file")),
     sidebar = b$boxSidebar(
