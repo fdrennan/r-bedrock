@@ -15,8 +15,8 @@ ui <- function(input) {
     b$dashboardSidebar(disable = TRUE),
     b$dashboardBody(
       s$fluidRow(
-        installation$ui(),
-        documentation$ui(),
+        # installation$ui(),
+        # documentation$ui(),
         shinyAce$ui()
       )
     )

@@ -14,7 +14,7 @@ ui <- function(id = "shinyAce") {
           5,
           a$aceEditor(
             outputId = ns("ace"),
-            selectionId = ns("selection"),
+            # selectionId = "selection",
             value = "ls -lah",
             placeholder = ""
           )
@@ -52,7 +52,7 @@ server <- function(id = "shinyAce") {
       s$observe({
         a$updateAceEditor(
           session,
-          "ace",
+          ns("ace"),
           theme = input$theme,
           mode = input$mode,
           tabSize = input$size,
@@ -62,21 +62,18 @@ server <- function(id = "shinyAce") {
       })
 
       s$observeEvent(input$reset, {
-        a$updateAceEditor(session, "ace",
+        a$updateAceEditor(session, ns("ace"),
           value = "ls -lah"
         )
       })
 
       s$observeEvent(input$clear, {
-        a$updateAceEditor(session, "ace", value = "")
+        a$updateAceEditor(session, ns("ace"), value = "")
       })
 
       output$aceOutput <- s$renderUI({
         input$submit
-        browser()
-        s$isolate(input$ace)
-        s$isolate(input$ace_shinyAce_annotationTrigger)
-        s$isolate(input$`ace_shinyAce-selection`)
+        # browser()
         tmp <- tempfile()
         sys$exec_wait(cmd = input$ace, std_out = tmp)
         s$tags$pre(
