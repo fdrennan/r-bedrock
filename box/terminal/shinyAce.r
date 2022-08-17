@@ -1,62 +1,64 @@
 #' @export
 ui <- function(id = "shinyAce") {
-  box::use(s = shiny, a = shinyAce, .. / bs4Mod / box, b = bs4Dash)
-
+  box::use(shiny)
   ns <- s$NS(id)
-  box$box(
+  bs4Dash$box(
+    title = "Terminal",
     width = 12,
-    s$fluidRow(
-      s$column(
+    shiny$fluidRow(
+      shiny$column(
         4,
-        a$aceEditor(vimKeyBinding = TRUE,height = '100px',
+        shinyAce$aceEditor(
+          vimKeyBinding = TRUE, height = "100px",
           outputId = ns("ace"),
           value = "ls -lah",
           placeholder = ""
         ),
-        s$actionButton(ns("submit"), "Submit", class = "btn btn-primary btn-block btn-small")
+        shiny$actionButton(
+          ns("submit"), 
+          "Submit", 
+          class = "btn btn-primary btn-block btn-small"
+        )
       ),
-      s$column(
-        8,
-        s$uiOutput(ns("aceOutput"))
+      shiny$column(8,
+        shiny$uiOutput(ns("aceOutput"))
       )
     )
   )
 }
 #' @export
 server <- function(id = "shinyAce") {
-  box::use(a = shinyAce, s = shiny, sys, r = readr)
+  box::use(shinyAce, shiny, sys, readr, bs4Dash)
 
-  s$moduleServer(
+  shiny$moduleServer(
     id,
     function(input, output, session) {
       ns <- session$ns
-
-      s$observe({
-        print(s$reactiveValuesToList(input))
-      })
-      s$observeEvent(input$reset, {
-        a$updateAceEditor(session, ns("ace"),
-          value = "ls -lah"
-        )
-      })
-
-      s$observeEvent(input$clear, {
-        a$updateAceEditor(session, ns("ace"), value = "")
-      })
-
-
-      results <- s$eventReactive(
+      
+      results <- shiny$eventReactive(
         input$submit,
         {
           tmp <- tempfile()
           sys$exec_wait(cmd = input$ace, std_out = tmp)
-          s$tags$pre(
-            r$read_file(tmp)
+          shiny$tags$pre(
+            readr$read_file(tmp)
           )
         }
       )
+      
       output$aceOutput <- s$renderUI({
         results()
+      })
+      
+
+      shiny$observeEvent(input$reset, {
+        shinyAce$updateAceEditor(session, ns("ace"),
+          value = "ls -lah"
+        )
+      })
+
+      shiny$observeEvent(input$clear, {
+        shinyAce$updateAceEditor(session, ns("ace"), value = "")
       })
     }
   )
