@@ -10,33 +10,19 @@ ui <- function(id = "shinyAce") {
   box$box(
     width = 12,
     s$fluidRow(
-        s$column(
-          5,
-          a$aceEditor(
-            outputId = ns("ace"),
-            # selectionId = "selection",
-            value = "ls -lah",
-            placeholder = ""
-          )
+      s$column(
+        4,
+        a$aceEditor(
+          outputId = ns("ace"),
+          value = "ls -lah",
+          placeholder = ""
         ),
-        s$column(
-          5,
-          s$uiOutput(ns("aceOutput"))
-        )
-    ),
-    sidebar = b$boxSidebar(
-      id = ns('sidebar'), startOpen = TRUE, easyClose = TRUE,
-      s$selectInput(ns("mode"), "Mode: ", choices = modes, selected = "r"),
-      s$selectInput(ns("theme"), "Theme: ", choices = themes, selected = "ambience"),
-      s$numericInput(ns("size"), "Tab size:", 4),
-      s$radioButtons(ns("soft"), NULL, c("Soft tabs" = TRUE, "Hard tabs" = FALSE), inline = TRUE),
-      s$radioButtons(ns("invisible"), NULL, c(
-        "Hide invisibles" = FALSE,
-        "Show invisibles" = TRUE
-      ), inline = TRUE),
-      s$actionButton(ns("reset"), "Reset text"),
-      s$actionButton(ns("clear"), "Clear text"),
-      s$actionButton(ns("submit"), "Send text")
+        s$actionButton(ns("submit"), "Send text", class = "btn btn-primary btn-block btn-small")
+      ),
+      s$column(
+        8,
+        s$uiOutput(ns("aceOutput"))
+      )
     )
   )
 }
@@ -50,17 +36,8 @@ server <- function(id = "shinyAce") {
       ns <- session$ns
 
       s$observe({
-        a$updateAceEditor(
-          session,
-          ns("ace"),
-          theme = input$theme,
-          mode = input$mode,
-          tabSize = input$size,
-          useSoftTabs = as.logical(input$soft),
-          showInvisibles = as.logical(input$invisible)
-        )
+        print(s$reactiveValuesToList(input))
       })
-
       s$observeEvent(input$reset, {
         a$updateAceEditor(session, ns("ace"),
           value = "ls -lah"
@@ -71,14 +48,19 @@ server <- function(id = "shinyAce") {
         a$updateAceEditor(session, ns("ace"), value = "")
       })
 
+
+      results <- s$eventReactive(
+        input$submit,
+        {
+          tmp <- tempfile()
+          sys$exec_wait(cmd = input$ace, std_out = tmp)
+          s$tags$pre(
+            r$read_file(tmp)
+          )
+        }
+      )
       output$aceOutput <- s$renderUI({
-        input$submit
-        # browser()
-        tmp <- tempfile()
-        sys$exec_wait(cmd = input$ace, std_out = tmp)
-        s$tags$pre(
-          r$read_file(tmp)
-        )
+        results()
       })
     }
   )

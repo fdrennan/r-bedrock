@@ -16,8 +16,6 @@ RUN ./aws/install
 
 RUN R -e "install.packages(c('renv'))"
 
-RUN R -e "install.packages('reticulate')"
-RUN R -e "reticulate::install_miniconda()"
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
