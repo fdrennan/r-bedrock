@@ -2,22 +2,18 @@
 ui <- function(id = "shinyAce") {
   box::use(s = shiny, a = shinyAce, .. / bs4Mod / box, b = bs4Dash)
 
-  modes <- a$getAceModes()
-  themes <- a$getAceThemes()
-
-
   ns <- s$NS(id)
   box$box(
     width = 12,
     s$fluidRow(
       s$column(
         4,
-        a$aceEditor(
+        a$aceEditor(vimKeyBinding = TRUE,height = '100px',
           outputId = ns("ace"),
           value = "ls -lah",
           placeholder = ""
         ),
-        s$actionButton(ns("submit"), "Send text", class = "btn btn-primary btn-block btn-small")
+        s$actionButton(ns("submit"), "Submit", class = "btn btn-primary btn-block btn-small")
       ),
       s$column(
         8,
