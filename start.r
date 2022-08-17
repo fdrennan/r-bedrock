@@ -38,8 +38,8 @@ server <- function(input, output, session) {
     box / ui / documentation,
     box / terminal / shinyAce
   )
-  documentation$server()
-  shinyAce$server()
+  documentationInputs <- documentation$server()
+  shinyAce$server(default_value=documentationInputs)
 }
 
 

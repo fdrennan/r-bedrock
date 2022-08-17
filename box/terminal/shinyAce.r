@@ -8,10 +8,21 @@ ui <- function(id = "shinyAce", default_value='ls -lah') {
     shiny$fluidRow(
       shiny$column(4,
         shiny$div(
+          class='d-flex justify-content-between align-items-top',
+          shiny$actionButton(
+            ns("reset"), 
+            "Reset" 
+          ),
+          shiny$actionButton(
+            ns("clear"), 
+            "Clear"
+          )
+        ),
+        shiny$div(
           class='p-1',
           shinyAce$aceEditor(
-            minLines=40,
-            maxLines=40,
+            minLines=30,
+            maxLines=30,
             autoScrollEditorIntoView = TRUE,
             vimKeyBinding = TRUE, showLineNumbers = TRUE, 
             theme = "pastel_on_dark",
@@ -28,7 +39,6 @@ ui <- function(id = "shinyAce", default_value='ls -lah') {
         )
       ),
       shiny$column(8,
-        
         shiny$uiOutput(ns("aceOutput"))
       )
     )
@@ -60,13 +70,13 @@ server <- function(id = "shinyAce", default_value='ls -lah') {
       
 
       shiny$observeEvent(input$reset, {
-        shinyAce$updateAceEditor(session, ns("ace"),
-          value = default_value
+        shinyAce$updateAceEditor(session, "ace",
+          value = readr$read_file(default_value$dirFiles)
         )
       })
 
       shiny$observeEvent(input$clear, {
-        shinyAce$updateAceEditor(session, ns("ace"), value = "")
+        shinyAce$updateAceEditor(session, "ace", value = "")
       })
     }
   )

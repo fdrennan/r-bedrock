@@ -60,6 +60,8 @@ server <- function(id = "documentation") {
         }
         out
       })
+      
+      input
     }
   )
 }
