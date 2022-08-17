@@ -12,7 +12,7 @@ ui <- function(input) {
     header=bs4Dash$dashboardHeader(border = TRUE,
       compact =FALSE
     ),
-    sidebar = bs4Dash$dashboardSidebar(width = '500px',
+    sidebar = bs4Dash$dashboardSidebar(width = '500px', expandOnHover = TRUE,
       documentation$ui()
     ),
     controlbar = bs4Dash$dashboardControlbar(

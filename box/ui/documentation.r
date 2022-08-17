@@ -3,7 +3,7 @@ ui <- function(id = "documentation") {
   box::use(fs)
   box::use(s = shiny[t = tags], b = bs4Dash)
   ns <- s$NS(id)
-  b$box(width=12,
+  b$box(width=12,height = '400px',
     title = t$h3("Documentation"),
     s$uiOutput(ns("file")),
     sidebar = b$boxSidebar(
@@ -58,7 +58,7 @@ server <- function(id = "documentation") {
             paste0("\n", file)
           )
         }
-        out
+          out
       })
       
       input

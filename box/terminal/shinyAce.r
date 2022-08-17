@@ -6,7 +6,7 @@ ui <- function(id = "shinyAce", default_value='ls -lah') {
     title = "Terminal",
     width = 12,
     shiny$fluidRow(
-      shiny$column(4,
+      shiny$column(6,
         shiny$div(
           class='d-flex justify-content-between align-items-top',
           shiny$actionButton(
@@ -38,7 +38,7 @@ ui <- function(id = "shinyAce", default_value='ls -lah') {
           class = "btn btn-primary btn-block btn-small"
         )
       ),
-      shiny$column(8,
+      shiny$column(6,
         shiny$uiOutput(ns("aceOutput"))
       )
     )
@@ -46,7 +46,7 @@ ui <- function(id = "shinyAce", default_value='ls -lah') {
 }
 #' @export
 server <- function(id = "shinyAce", default_value='ls -lah') {
-  box::use(shinyAce, shiny, sys, readr, bs4Dash)
+  box::use(shinyAce, shiny, sys, readr, bs4Dash, fs)
 
   shiny$moduleServer(
     id,
@@ -71,7 +71,7 @@ server <- function(id = "shinyAce", default_value='ls -lah') {
 
       shiny$observeEvent(input$reset, {
         shinyAce$updateAceEditor(session, "ace",
-          value = readr$read_file(default_value$dirFiles)
+          value = readr$read_file(default_value$dirFiles), mode = fs$path_ext(default_value$dirFiles)
         )
       })
 
