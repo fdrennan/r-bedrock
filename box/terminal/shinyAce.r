@@ -7,7 +7,7 @@ ui <- function(id = "shinyAce", default_value = "ls -lah") {
     width = 12,
     shiny$fluidRow(
       shiny$column(
-        6,
+        12,
         shiny$div(
           class = "d-flex justify-content-between align-items-top",
           shiny$actionButton(
@@ -40,7 +40,7 @@ ui <- function(id = "shinyAce", default_value = "ls -lah") {
         )
       ),
       shiny$column(
-        6,
+        12,
         shiny$uiOutput(ns("aceOutput"))
       )
     )
@@ -48,7 +48,7 @@ ui <- function(id = "shinyAce", default_value = "ls -lah") {
 }
 #' @export
 server <- function(id = "shinyAce", default_value = "ls -lah") {
-  box::use(shinyAce, shiny, sys, readr, bs4Dash, fs)
+  box::use(shinyAce, shiny, sys, readr, bs4Dash, fs, highlight)
 
   shiny$moduleServer(
     id,
@@ -58,11 +58,18 @@ server <- function(id = "shinyAce", default_value = "ls -lah") {
       results <- shiny$eventReactive(
         input$submit,
         {
-          tmp <- tempfile()
-          sys$exec_wait(cmd = input$ace, std_out = tmp)
-          shiny$tags$pre(
-            readr$read_file(tmp)
-          )
+          # tmp <- tempfile()
+          # sys$exec(cmd = input$ace, std_out = tmp)
+          # shiny$tags$pre(
+            # readr$read_file(tmp)
+          # )
+          # browser()
+          tf <- tempfile()
+          readr$write_file(input$ace, file = tf )
+          shiny$HTML(highlight$highlight( file = tf, detective = highlight$simple_detective, 
+                     renderer = highlight$renderer_html( document = FALSE ) ))
+          
+          # shiny$tags$pre()
         }
       )
 
@@ -71,7 +78,8 @@ server <- function(id = "shinyAce", default_value = "ls -lah") {
       })
 
 
-      shiny$observeEvent(input$reset, {
+      shiny$observe({
+        shiny$req(default_value$dirFiles)
         shinyAce$updateAceEditor(session, "ace",
           value = readr$read_file(default_value$dirFiles), mode = fs$path_ext(default_value$dirFiles)
         )

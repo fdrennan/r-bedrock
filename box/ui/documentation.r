@@ -5,7 +5,7 @@ ui <- function(id = "documentation", file = NULL) {
   ns <- s$NS(id)
   b$box(
     width = 12, height = "400px",
-    title = t$h3("Documentation"),
+    title = t$h3("Skeleton"),
     s$uiOutput(ns("directories")),
     s$uiOutput(ns("files")),
     s$uiOutput(ns("file")),
