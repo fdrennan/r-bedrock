@@ -1,58 +1,60 @@
 #' @export
-ui <- function(id = "shinyAce", default_value='ls -lah') {
+ui <- function(id = "shinyAce", default_value = "ls -lah") {
   box::use(shiny, bs4Dash, shinyAce)
   ns <- shiny$NS(id)
   bs4Dash$box(
     title = "Terminal",
     width = 12,
     shiny$fluidRow(
-      shiny$column(6,
+      shiny$column(
+        6,
         shiny$div(
-          class='d-flex justify-content-between align-items-top',
+          class = "d-flex justify-content-between align-items-top",
           shiny$actionButton(
-            ns("reset"), 
-            "Reset" 
+            ns("reset"),
+            "Reset"
           ),
           shiny$actionButton(
-            ns("clear"), 
+            ns("clear"),
             "Clear"
           )
         ),
         shiny$div(
-          class='p-1',
+          class = "p-1",
           shinyAce$aceEditor(
-            minLines=30,
-            maxLines=30,
+            minLines = 30,
+            maxLines = 30,
             autoScrollEditorIntoView = TRUE,
-            vimKeyBinding = TRUE, showLineNumbers = TRUE, 
+            vimKeyBinding = TRUE, showLineNumbers = TRUE,
             theme = "pastel_on_dark",
-            highlightActiveLine = TRUE, 
+            highlightActiveLine = TRUE,
             outputId = ns("ace"),
             value = default_value,
             placeholder = ""
           )
         ),
         shiny$actionButton(
-          ns("submit"), 
-          "Submit", 
+          ns("submit"),
+          "Submit",
           class = "btn btn-primary btn-block btn-small"
         )
       ),
-      shiny$column(6,
+      shiny$column(
+        6,
         shiny$uiOutput(ns("aceOutput"))
       )
     )
   )
 }
 #' @export
-server <- function(id = "shinyAce", default_value='ls -lah') {
+server <- function(id = "shinyAce", default_value = "ls -lah") {
   box::use(shinyAce, shiny, sys, readr, bs4Dash, fs)
 
   shiny$moduleServer(
     id,
     function(input, output, session) {
       ns <- session$ns
-      
+
       results <- shiny$eventReactive(
         input$submit,
         {
@@ -63,11 +65,11 @@ server <- function(id = "shinyAce", default_value='ls -lah') {
           )
         }
       )
-      
+
       output$aceOutput <- shiny$renderUI({
         results()
       })
-      
+
 
       shiny$observeEvent(input$reset, {
         shinyAce$updateAceEditor(session, "ace",
