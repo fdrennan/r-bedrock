@@ -10,15 +10,11 @@ ui_app <- function(id='app') {
 #' 
 #' @export
 server_app <- function(id='app', session, parentSession) {
-  box::use(
-    ./home[server_home],
-    shiny[moduleServer]
-  )
+  box::use(./home[server_home], shiny[moduleServer])
   
   server_fn <- function(input, output, session) {
     server_home(parentSession=parentSession)
   }
-  
-  
   moduleServer(id,server_fn, session=parentSession)
 }
+
