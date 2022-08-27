@@ -6,10 +6,9 @@ ui <- function() {
 }
 
 
+
 server <- function(input, output, session) {
   box::use(./box/app[server_app])
-  box::use(shiny[renderPrint, reactiveValuesToList])
-  
   server_app(parentSession=session)
 }
 
