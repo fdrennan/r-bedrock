@@ -16,7 +16,7 @@ server_app <- function(id='app', session, parentSession) {
   )
   
   server_fn <- function(input, output, session) {
-    server_home()
+    server_home(parentSession=parentSession)
   }
   
   
