@@ -1,47 +1,16 @@
-library(shiny)
-
-ui_inner <- function(id='inner') {
-  ns <- NS(id)
-  uiOutput(ns('asdf'))
-}
-
-server_inner <- function(input, output, session) {
-  output$asdf <- renderUI({
-    tagList(
-      'Hello how are you'
-    )
-  })
-}
-
-ui_home <- function(id='home') {
-  ns <- NS(id)
-  fluidRow(
-    uiOutput(ns('ui')),
-    ui_inner()
-  )
-}
-
-server_home <- function(id='home', session, sesh) {
-  moduleServer(
-    id,
-    function(input, output, session) {
-      output$ui <- renderUI({
-        'I am working'
-      })
-      
-      callModule(server_inner, id='inner', session=sesh)
-    }
-  )
-}
-
-
+box::use(shiny[shinyApp])
 
 ui <- function() {
-  ui_home()
+  box::use(./box/app[ui_app])
+  ui_app()
 }
 
+
 server <- function(input, output, session) {
-  server_home(sesh=session)
+  box::use(./box/app[server_app])
+  box::use(shiny[renderPrint, reactiveValuesToList])
+  
+  server_app(parentSession=session)
 }
 
 shinyApp(ui, server)
