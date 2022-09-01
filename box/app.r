@@ -15,6 +15,6 @@ server_app <- function(id='app', session, parentSession) {
   server_fn <- function(input, output, session) {
     server_home(parentSession=parentSession)
   }
-  moduleServer(id,server_fn, session=parentSession)
+  moduleServer(id, server_fn, session=parentSession)
 }
 

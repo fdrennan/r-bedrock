@@ -11,7 +11,20 @@ server_home <- function(id='home', parentSession) {
   
   server_fn <- function(input, output, session) {
     box::use(shiny[renderUI])
-    output$landing <- renderUI('Running')
+    box::use(bs4Dash)
+    box::use(./plot[plot_server, plot_ui])
+    ns <- session$ns
+    output$landing <- renderUI({
+      bs4Dash$dashboardPage(
+        header = bs4Dash$dashboardHeader(),
+        sidebar = bs4Dash$dashboardSidebar(),
+        body = bs4Dash$dashboardBody(
+          plot_ui(id=ns('plot'))
+        )
+      )
+    })
+    # debug(plot_server)
+    plot_server(id=ns('plot'), parentSession=parentSession)
   }
   
   moduleServer(
