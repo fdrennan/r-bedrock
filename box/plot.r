@@ -2,12 +2,7 @@
 plot_ui <- function(id='plot') {
   box::use(shiny[fluidRow, column, plotOutput, NS])
   ns <- NS(id)
-  fluidRow(
-    'asdfadf',
-    column(11, plotOutput(ns("plotOutput")))
-  )
-    
-  
+  plotOutput(ns("plotOutput"))
 }
 
 #' @export

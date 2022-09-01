@@ -8,7 +8,6 @@ ui <- function() {
  
 ui <- secure_app(ui())
 
-
 server <- function(input, output, session) {
   box::use(./box/app)
   box::use(./box/credentials[credentials])

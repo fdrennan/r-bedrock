@@ -10,7 +10,7 @@ server_home <- function(id='home', parentSession) {
   box::use(shiny[moduleServer])
   
   server_fn <- function(input, output, session) {
-    box::use(shiny[renderUI])
+    box::use(shiny[renderUI, fluidRow])
     box::use(bs4Dash)
     box::use(./plot[plot_server, plot_ui])
     ns <- session$ns
@@ -19,12 +19,15 @@ server_home <- function(id='home', parentSession) {
         header = bs4Dash$dashboardHeader(),
         sidebar = bs4Dash$dashboardSidebar(),
         body = bs4Dash$dashboardBody(
-          plot_ui(id=ns('plot'))
+          fluidRow(
+            plot_ui(id=ns('plot')),
+            plot_ui(id=ns('plot2'))
+          )
         )
       )
     })
-    # debug(plot_server)
     plot_server(id=ns('plot'), parentSession=parentSession)
+    plot_server(id=ns('plot2'), parentSession=parentSession)
   }
   
   moduleServer(
